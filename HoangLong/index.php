@@ -1,6 +1,6 @@
 <?php
     require_once 'config/db.php';
-    
+    require_once 'constant.php';
 ?>
 <?php
     $sql = "SELECT * FROM products inner join brands on products.brand_id = brands.brand_id";
@@ -63,6 +63,15 @@
 
                    </button>
                 </div>
+
+                <div class="item">
+                    <a href="giohang/giohang.php">
+                        <i class='bx bxs-shopping-bag'></i>
+                    </a>
+
+                </div>
+
+                
 
 
             </div>
@@ -174,7 +183,7 @@
                         while($row = mysqli_fetch_assoc($query)){?>
                         <div class="item">
                         <a href="sanpham/sanpham.php?product_id=<?php echo $row['prd_id']; ?>">
-                            <img src="<?php echo 'admin/img/'.$row['image']; ?>" alt="">
+                            <img src="<?php echo BaseURL.'img/'.$row['image']; ?>" alt="">
                             <div class="item-body">
                                     <p><?php echo $row['prd_name']; ?></p>
                                 <p><?php echo $row['price']; ?> ₫</p>   

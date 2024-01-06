@@ -35,14 +35,19 @@ const tang = document.querySelector('#tang');
 tru.addEventListener('click', function(){
     counter--;
     document.querySelector('#counter').innerHTML = counter;
+    document.querySelector('#cart_quantily').value = counter;
 });
 
 tang.addEventListener('click', function(){
     counter++;
     document.querySelector('#counter').innerHTML = counter;
+    document.querySelector('#cart_quantily').value = counter;
 });
 
-
+const themgiohang = document.querySelector('#btn_submit_cart');
+themgiohang.addEventListener('click',function(){
+  document.querySelector('#cart').submit();
+});
 
 
 

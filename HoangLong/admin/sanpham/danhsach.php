@@ -33,7 +33,7 @@
                             <td><?php echo $i++; ?></td>  
                             <td><?php echo $row['prd_name']; ?></td>
                             <td>
-                                <img style="width:100px" src="<?php echo 'img/'.$row['image']; ?>" alt="">
+                                <img style="width:100px" src="<?php echo '../img/'.$row['image']; ?>" alt="">
                                 
                             </td>
                             <td><?php echo $row['price']; ?></td>

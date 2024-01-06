@@ -18,7 +18,7 @@
         VALUES ('$prd_name', '$image', $price, $quantily,  '$description',  $brand_id )";
 
         $query = mysqli_query($connect, $sql);
-        move_uploaded_file($image_tmp,'img/'.$image);
+        move_uploaded_file($image_tmp,'../../img/'.$image);
         header('location: index.php?page_layout=danhsach');
 
     }

@@ -4,13 +4,7 @@
 ?>
 
 <?php
-    if(isset($_GET['product_id'])){
-
-        $product_id = $_GET['product_id'];
-        $sql = "SELECT * FROM products WHERE products.prd_id = '$product_id'";
-        $query = mysqli_query($connect, $sql);
-        $product = mysqli_fetch_assoc($query);
-    }
+   session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,8 +12,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="sanpham.css">
+    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="main">
@@ -67,13 +62,6 @@
                    </button>
                 </div>
 
-                <div class="item">
-                    <a href="../giohang/giohang.php">
-                        <i class='bx bxs-shopping-bag'></i>
-                    </a>
-
-                </div>
-
 
             </div>
         
@@ -82,87 +70,55 @@
 
         <div id="content">
             <div class="content-body">
-                <div class="box-left">
-                    <img src="<?php echo BaseURL.'img/'.$product['image']?>" alt="">
-    
+                
+                <div class="content-heading">
+                GIỎ HÀNG
                 </div>
-                <div class="box-right">
-                    <div class="heading">
-                        <p>TRANG CHỦ / PIZZA</p>
-
-                    </div>
-                    <div class="product">
-                        <P><?php echo $product['prd_name']?></P>
-                        
-                    </div>
-                    <div class="price">
-                    <P><?php echo $product['price'].'.vnd'?></P>
-
-                    </div>
-                    <div class="content">
-                        <?php echo $product['description']?>
-                    </div>
-                    <div class="sub-content">
-                        <div class="number">
-                            <button id="tru">-</button> 
-                            <p id="counter">1</p>
-                            <button id="tang">+</button>
-                        </div>
-                        <div class="add">
-                            <button id="btn_submit_cart">THÊM VÀO GIỎ</button>
-                        </div>
-                        <form id="cart" name="themgiohang" action="../giohang/xuligiohang.php" method = "POST">
-                            <input type="hidden" name="product_id" value = "<?php echo $product_id?>"> 
-                            <input id="cart_quantily" type="hidden" name="quantily" value = "1"> 
-                            <input type="hidden" name="themgiohang" value = "themgiohang">
-                        </form>
-
-                    </div>
-                    <div class="ship">
-                        <div class="box">
-                            <p>Tính phí ship tự động</p>
-                            <div class="service">
-                                <img src="./img/logo1.jpg" alt="">
-                                <img src="./img/logo2.jpg" alt="">
-                                <img src="./img/logo3.jpg" alt="">
-                                <img src="./img/logo4.jpg" alt="">
-                                <img src="./img/logo5.jpg" alt="">
-                                <img src="./img/logo6.jpg" alt="">
-
-                            </div>
-                        </div>
-                        <div class="box">
-                            <p>Thanh toán</p>
-                            <div class="service">
-                                <img src="./img/logo7.jpg" alt="">
-                                <img src="./img/logo8.jpg" alt="">
-                                <img src="./img/logo9.jpg" alt="">
-                                <img src="./img/logo10.jpg" alt="">
-                                <img src="./img/logo11.jpg" alt="">
-                                <img src="./img/logo12.jpg" alt="">
-                                        
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
+                <table>
+                <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>Tên sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá</th>
+                <th>Số lượng đã đặt</th>
+                <th>Thành tiền</th>
+                </tr>
+                <?php 
+                $tongtien = 0;
+                if (!isset($_SESSION['giohang'])){
+                    echo "<td>Giỏ hàng hiện không có sản phẩm nào được thêm !</td>";
+                }
+                else{
+                    
+                    for($i = 0 ; $i < sizeof($_SESSION['giohang']) ;$i++){
+                        $tongtien += $_SESSION['giohang'][$i][3]* $_SESSION['giohang'][$i][4];
+                        ?>
+                    <tr>
+                        <td><?php echo $i + 1?></td>
+                        <td><?php echo $_SESSION['giohang'][$i][0] ?></td>
+                        <td><?php echo $_SESSION['giohang'][$i][1] ?></td>
+                        <td><img class="cart-image" src="<?php echo BaseURL.'img/'.$_SESSION['giohang'][$i][2] ?>" alt=""></td>
+                        <td><?php echo $_SESSION['giohang'][$i][3] ?></td>
+                        <td><?php echo $_SESSION['giohang'][$i][4] ?></td>
+                        <td><?php echo $_SESSION['giohang'][$i][3]* $_SESSION['giohang'][$i][4]?></td>
+                    </tr>
+                    <?php
+                    }
+                }
+                
+                ?>
+                    <tr>
+                        <td>
+                        Tổng tiền : <?php echo $tongtien?> VND
+                        </td>
+                    </tr>
+            </table>
+            <form action="xuligiohang.php" method="POST">
+                <input type="submit" value="Xoa gio hang"name = "xoagiohang">
+            </form>
             </div>
 
-        </div>
-
-        <div id="describe">
-            <button> MÔ TẢ</button>
-            <h2>Nguyên liệu cơ bản</h2>
-            <p>
-                -Bột mì <br>
-                -Cà chua <br>
-                -Bơ  <br>
-                -Dăm bông  <br>
-                -Basil
-            </p>
-            <h2>Burrata Parma Ham</h2>
-            <p>Người ta tin rằng vào tháng 6 năm 1889, pizzaiolo (thợ làm pizza) Raffaele Esposito, đầu bếp của Brand Brandi, đã phát minh ra một món ăn gọi là "urrata Parma Ham" để vinh danh Hoàng hậu Ý, Margherita xứ Savoie và sự thống nhất của nước Ý, vì lớp phủ bên trên của nó bao gồm cà chua (đỏ), mozzarella (trắng) và húng quế (xanh lá cây), đại diện cho ba dải màu trên quốc kỳ Ý.</p>
         </div>
 
         <div id="register">
