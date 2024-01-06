@@ -117,6 +117,7 @@
             <form action="xuligiohang.php" method="POST">
                 <input type="submit" value="Xoa gio hang"name = "xoagiohang">
             </form>
+            <a href="../index.php#products">Tiếp tục mua </a>
             </div>
 
         </div>
